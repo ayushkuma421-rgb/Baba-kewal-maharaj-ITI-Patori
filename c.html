@@ -1,0 +1,74 @@
+<php
+$messageSent = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $subject = $_POST['subject'];
+    $message = $_POST['message'];
+
+    $to = "ayushkuma421@gmail.com"; // अपना email डालें
+    $mailSubject = "New Contact Form Message: " . $subject;
+
+    $body = "Name: $name\n";
+    $body .= "Email: $email\n";
+    $body .= "Message: $message\n";
+
+    $headers = "From: $email";
+
+    if (mail($to, $mailSubject, $body, $headers)) {
+        $messageSent = "Message sent successfully!";
+    } else {
+        $messageSent = "Failed to send message.";
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="c.css">
+</head>
+<body>
+   <div class="container">
+    <div class="contact-info">
+        <h2>Portal Contact Details</h2>
+        <p><strong>Email:</strong> support@portal.com</p>
+        <p><strong>Phone:</strong> +91 9876543210</p>
+        <p><strong>Address:</strong> Samastipur, Bihar, India</p>
+        <p><strong>Support Time:</strong> 9 AM - 6 PM</p>
+        <p><strong>Location <a href="https://www.google.com/maps/place/25%C2%B039'44.4%22N+85%C2%B038'44.8%22E/@25.6625369,85.6458843,73m/data=!3m1!1e3!4m4!3m3!8m2!3d25.662333!4d85.645768?entry=ttu&g_ep=EgoyMDI2MDQxMy4wIKXMDSoASAFQAw%3D%3D">Click Here</a></strong></p>
+    </div>
+
+    <div class="contact-form">
+        <h2>Contact Us</h2>
+         <php if($messageSent != "") { ?>
+        <div class="msg"><php echo $messageSent; ?></div>
+    <php } ?>
+
+        <form method="POST">
+            <div class="input-box">
+                <input type="text" placeholder="Enter your name" required>
+            </div>
+
+            <div class="input-box">
+                <input type="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="input-box">
+                <input type="text" placeholder="Subject" required>
+            </div>
+
+            <div class="input-box">
+                <textarea placeholder="Write your message"></textarea>
+            </div>
+
+            <button class="btn" type="submit">Send Message</button>
+        </form>
+    </div>
+</div>
+ 
+</body>
+</html>
